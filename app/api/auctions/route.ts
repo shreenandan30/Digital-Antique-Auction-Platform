@@ -1,0 +1,3 @@
+import {listAuctions} from "@/lib/auction";import {logActivity} from "@/lib/mongodb";import {currentUser} from "@/lib/auth";import {errorResponse} from "@/lib/http";
+export const dynamic = "force-dynamic";
+export async function GET(req:Request){try{const p=new URL(req.url).searchParams;const status=p.get("status")||undefined;const requested=Number(p.get("limit"));const limit=Number.isInteger(requested)&&requested>0?Math.min(requested,100):100;const rows=await listAuctions(status,limit);const user=await currentUser();await logActivity(user?.userId??null,"VIEW_AUCTION","auction",null,"Browsed auctions");return Response.json(rows)}catch(e){return errorResponse(e)}}

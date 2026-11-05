@@ -1,0 +1,9 @@
+CREATE TABLE IF NOT EXISTS user_account (
+  user_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  full_name VARCHAR(120) NOT NULL,
+  email VARCHAR(254) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role VARCHAR(10) NOT NULL DEFAULT 'user',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT chk_user_account_role CHECK (role IN ('user','admin'))
+) ENGINE=InnoDB;

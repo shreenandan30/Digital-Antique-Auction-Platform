@@ -1,0 +1,3 @@
+import {query} from "@/lib/mysql";import type {RowDataPacket} from "mysql2/promise";import {requireUser} from "@/lib/auth";import {errorResponse} from "@/lib/http";
+export const dynamic = "force-dynamic";
+export async function GET(){try{const user=await requireUser();return Response.json(await query<RowDataPacket[]>("SELECT b.*,a.status AS auction_status,a.start_date,a.end_date,i.name AS antique_name FROM bid b JOIN bidder d ON d.bidder_id=b.bidder_id JOIN auction a ON a.auction_id=b.auction_id JOIN antique_item i ON i.item_id=a.item_id WHERE d.email=? ORDER BY b.bid_time DESC",[user.email]))}catch(e){return errorResponse(e)}}

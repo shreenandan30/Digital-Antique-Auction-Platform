@@ -1,0 +1,3 @@
+import {query} from "@/lib/mysql";import type {RowDataPacket} from "mysql2/promise";import {asNumber,errorResponse} from "@/lib/http";import {requireUser} from "@/lib/auth";
+export const dynamic = "force-dynamic";
+export async function GET(_:Request,{params}:{params:{id:string}}){try{await requireUser();const id=asNumber(params.id);if(!id)return Response.json({error:"Invalid auction ID."},{status:400});const rows=await query<RowDataPacket[]>("SELECT b.bid_id,b.auction_id,b.bid_amount,b.bid_time,bd.name AS bidder_name FROM bid b JOIN bidder bd ON bd.bidder_id=b.bidder_id WHERE b.auction_id=? ORDER BY b.bid_amount DESC",[id]);return Response.json(rows)}catch(e){return errorResponse(e)}}
