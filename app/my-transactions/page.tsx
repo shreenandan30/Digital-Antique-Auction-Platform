@@ -1,0 +1,1 @@
+import {AccountTable} from "@/components/account-table";export default function MyTransactions(){return <section className="wrap"><header className="page-head"><div className="eyebrow">Your purchases</div><h1>My transactions</h1></header><AccountTable type="my-transactions"/></section>}

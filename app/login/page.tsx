@@ -1,0 +1,2 @@
+import Link from "next/link";import {AuthForm} from "@/app/auth-form";
+export default function Login(){return <section className="form-card"><div className="eyebrow">Welcome back</div><h1>Sign in</h1><p className="subtle">Sign in to follow auctions and place a bid.</p><AuthForm mode="login"/><p className="subtle">New here? <Link className="text-link" href="/register">Create an account</Link></p></section>}

@@ -1,0 +1,4 @@
+"use client";
+import {useEffect,useState} from "react";
+type Row=Record<string,unknown>;
+export function AccountTable({type}:{type:"my-bids"|"my-transactions"}){const [rows,setRows]=useState<Row[]>([]);const [msg,setMsg]=useState("Loading…");useEffect(()=>{fetch(`/api/${type}`).then(async r=>{const d=await r.json();if(!r.ok)throw new Error(d.error);setRows(d);setMsg("")}).catch(e=>setMsg(e.message))},[type]);if(msg)return <div className="notice">{msg}</div>;if(!rows.length)return <div className="notice">{type==="my-bids"?"You have not placed any bids yet.":"You do not have any transactions yet."}</div>;const columns=Object.keys(rows[0]);return <div className="table-wrap"><table><thead><tr>{columns.map(k=><th key={k}>{k.replaceAll("_"," ")}</th>)}</tr></thead><tbody>{rows.map((r,i)=><tr key={i}>{columns.map(k=><td key={k}>{String(r[k]??"—")}</td>)}</tr>)}</tbody></table></div>}

@@ -1,0 +1,1 @@
+import {AccountTable} from "@/components/account-table";export default function MyBids(){return <section className="wrap"><header className="page-head"><div className="eyebrow">Your activity</div><h1>My bids</h1></header><AccountTable type="my-bids"/></section>}
